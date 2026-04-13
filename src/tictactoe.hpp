@@ -1,3 +1,3 @@
 #include <string>
 #include <vector>
-string TicTacToe();
+string TicTacToe(int mode);
