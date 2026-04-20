@@ -13,6 +13,19 @@ void printBoard(const vector <char>& board){
     //actual game element
 }
 
+
+bool ComputerTurn(int mode, char player_check) {
+    if (mode == 2 && player_check == 'O') {
+        return true;
+    }
+    if (mode == 3 && player_check == 'X') {
+        return true;
+    }
+    return false;
+}
+//
+
+
 bool check_winner(const vector <char>& board, const char player_check) {
     if ((board[1] == player_check) && (board[5] == player_check) && (board[9] == player_check)){
         return true;
@@ -33,6 +46,15 @@ bool check_winner(const vector <char>& board, const char player_check) {
     return false;
 }
 
+int FirstSpot (const vector <char>& board) {
+    for (int i = 1; i <= 9; i++) {
+        if ((board[i] != 'X') && (board[i] != 'O')) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 
 
 string TicTacToe(int mode) {
@@ -42,21 +64,14 @@ string TicTacToe(int mode) {
     int counter = 0;
     cout << "Welcome to Tic Tac Toe!" << endl;
     vector <char> board = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    while (counter < 10) {
-        printBoard(board);
-        bool computer_turn = false;
-        if (mode == 2  || mode == 3) {
-            computer_turn = true;
-        }
-        if (computer_turn && mode == 3) {
-            for (int i = 1; i <= 9; i++) {
-                if ((board[i] != 'X') && (board[i] != 'O')) {
-                    player_input = i;
-                    cout << player_input << endl;
-                    break;
-                    printBoard(board);
-                }
-            }
+    printBoard(board);
+
+
+    while (counter < 9) {
+        bool computer_turn = ComputerTurn(mode, player_check);
+        if (computer_turn) {
+            player_input = FirstSpot(board);
+            cout << endl<<"Computer chooses:" << endl;
         }
         else {
             cout << endl << "What is your move?" << endl;
@@ -67,36 +82,37 @@ string TicTacToe(int mode) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     cout << "Invalid input, Please try again:" << endl;
-                    cin >> player_input;
+                   continue;
                 }
                 if (((player_input < 1) || (player_input > 9) ||(board[player_input] == 'X') || (board[player_input] == 'O'))){
-                    printBoard(board);
                     cout << "Invalid input, Please try again:" << endl;
                     continue;
                 }
-                else {
                     break;
-                }
             }
         }
+
+
             board[player_input] = player_check;
             counter++;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        printBoard(board);
+
             if (check_winner(board, player_check)) {
                 string win(1,player_check);
                 string winner = "Player " + win + " wins!";
-                printBoard(board);
                 cout << winner << endl;
                 return winner;
             }
+
             if (player_check == 'X') {
                 player_check = 'O';
             }
             else {
                 player_check = 'X';
             }
+
             if (counter == 9) {
-                printBoard(board);
+                cout <<"It's a tie!" << endl;
                 return "It's a tie!";
             }
 

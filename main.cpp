@@ -12,15 +12,16 @@ int main() {
      while (again) {
           cout <<"What mode do you want to play?" << endl;
           cout << "Type '1' for Human v.s. Human" << endl;
-          cout << "Type '2' for Human (1st) v.s. Computer (2nd)" << endl;
-          cout << "Type '3' for Computer (1st) v.s. Human (2nd)" << endl;
+          cout << "Type '2' for Human (Goes 1st) v.s. Computer (Goes 2nd)" << endl;
+          cout << "Type '3' for Computer (Goes 1st) v.s. Human (Goes 2nd)" << endl;
+          cout <<"Select mode: ";
           int mode;
           while (true) {
                cin >> mode;
                if (cin.fail() || mode <1 || mode > 3) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cout << "Please enter a valid mode." << endl;
+                    cout  << "Please enter a valid mode: ";
                }
                else {
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
