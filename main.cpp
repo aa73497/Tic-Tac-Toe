@@ -28,7 +28,29 @@ int main() {
                     break;
                }
           }
-          TicTacToe(mode);
+
+          int mode_trap = 0;
+          if (input == "1") {
+               cout << "Would you like to include a trap cell in your game?";
+               cout << "1. Yes (enter '1')";
+               cout << "2. No (enter '2')";
+          } // for portfolio 3, thus far got code getting a valid input for the new trap cell mode.
+          //still need to add backend stuff into a new TicTacToe(mode, mode_trap) that will have to randomly add trap cell
+          // and include case if/when users hit a trap cell.
+          while (true) {
+               cin >> mode_trap;
+               if (cin.fail() || mode_trap <1 || mode_trap > 2) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout  << "Please enter a valid mode: ";
+               }
+               else {
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    break;
+               }
+          }
+
+          TicTacToe(mode, mode_trap);
           cout << "Type 'y' or 'n' to play again." << endl;
           cin.ignore(numeric_limits<streamsize>::max(), '\n');
           getline(cin, input);

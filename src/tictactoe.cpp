@@ -57,7 +57,7 @@ int FirstSpot (const vector <char>& board) {
 
 
 
-string TicTacToe(int mode) {
+string TicTacToe(int mode, int mode_trap) {
     bool winner = false;
     char player_check = 'X';
     int player_input;
