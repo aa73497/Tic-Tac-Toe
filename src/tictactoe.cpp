@@ -3,6 +3,8 @@
 #include <vector>
 using namespace std;
 #include <limits>
+#include <cstdlib>
+
 void printBoard(const vector <char>& board){
     cout << "  " << board[1] << "  |  " << board[2] << "  |  " << board[3] << endl;
     cout << "-----+-----+-----" << endl;
@@ -23,7 +25,7 @@ bool ComputerTurn(int mode, char player_check) {
     }
     return false;
 }
-//
+
 
 
 bool check_winner(const vector <char>& board, const char player_check) {
@@ -44,6 +46,24 @@ bool check_winner(const vector <char>& board, const char player_check) {
         }
     }
     return false;
+}
+int RandomTrap() {
+    return (rand() % 9) +1;
+}
+
+bool isTrapHit(int input, int cell, int mode_trap) {
+    return mode_trap == 1 && (input == cell);
+}
+
+int MaxCells(int mode_trap) {
+    if (mode_trap == 1) {
+        return 8;
+    }
+    return 9;
+}
+
+bool isDraw(int counter, int mode_trap) {
+    return counter == MaxCells(mode_trap);
 }
 
 int FirstSpot (const vector <char>& board) {
@@ -66,15 +86,20 @@ string TicTacToe(int mode, int mode_trap) {
     vector <char> board = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     printBoard(board);
 
+int cell = -1;
+    if (mode_trap == 1) {
+        cell = RandomTrap();
+        cout << "A hidden trap has been placed on the board";
+    }
 
-    while (counter < 9) {
+    while (counter < MaxCells(mode_trap)) {
         bool computer_turn = ComputerTurn(mode, player_check);
         if (computer_turn) {
             player_input = FirstSpot(board);
-            cout << endl<<"Computer chooses:" << endl;
+            cout << endl<<"Computer chooses: spot " << player_input<< endl;
         }
         else {
-            cout << endl << "What is your move?" << endl;
+            cout << endl <<"Player "<< player_check<< ", What is your move?" << endl;
             while (true) {
                 cin >> player_input;
                 if (cin.fail())
@@ -91,6 +116,18 @@ string TicTacToe(int mode, int mode_trap) {
                     break;
             }
         }
+        if (isTrapHit(player_input, cell, mode_trap)) {
+            cout <<endl << "Player "<< player_check << " has set off the trap! They lose their turn!" << endl;
+            printBoard(board);
+            if (player_check == 'X') {
+                player_check = 'O';
+            }
+            else {
+                player_check = 'X';
+            }
+            continue;
+
+        }
 
 
             board[player_input] = player_check;
@@ -103,6 +140,10 @@ string TicTacToe(int mode, int mode_trap) {
                 cout << winner << endl;
                 return winner;
             }
+        if (isDraw(counter, mode_trap)) {
+            cout << "It's a tie!" << endl;
+            return "It's a tie!";
+        }
 
             if (player_check == 'X') {
                 player_check = 'O';
@@ -119,4 +160,5 @@ string TicTacToe(int mode, int mode_trap) {
 
         }
 return "It's a tie!";
+    cout <<"It's a tie!" << endl;
 }

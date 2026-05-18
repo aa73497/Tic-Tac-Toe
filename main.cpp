@@ -3,11 +3,15 @@ using namespace  std;
 #include "src/tictactoe.hpp"
 #include <vector>
 #include <string>
+#include <ctime>
+#include <limits>
+#include <cstdlib>
 #include <limits>
 
 int main() {
 
      bool again = true;
+     srand(time(nullptr));
      string input = "y";
      while (again) {
           cout <<"What mode do you want to play?" << endl;
@@ -29,14 +33,12 @@ int main() {
                }
           }
 
-          int mode_trap = 0;
-          if (input == "1") {
-               cout << "Would you like to include a trap cell in your game?";
-               cout << "1. Yes (enter '1')";
-               cout << "2. No (enter '2')";
-          } // for portfolio 3, thus far got code getting a valid input for the new trap cell mode.
-          //still need to add backend stuff into a new TicTacToe(mode, mode_trap) that will have to randomly add trap cell
-          // and include case if/when users hit a trap cell.
+          int mode_trap;
+               cout << endl;
+               cout << "Would you like to include a trap cell in your game?" << endl;
+               cout << "Type '1' for Yes" << endl;
+               cout << "Type '2' for No " << endl;
+
           while (true) {
                cin >> mode_trap;
                if (cin.fail() || mode_trap <1 || mode_trap > 2) {
@@ -52,11 +54,10 @@ int main() {
 
           TicTacToe(mode, mode_trap);
           cout << "Type 'y' or 'n' to play again." << endl;
-          cin.ignore(numeric_limits<streamsize>::max(), '\n');
-          getline(cin, input);
+          cin >> input;
           while ((input != "n") && (input != "y")) {
                cout << "Please enter a valid input." << endl;
-               getline(cin, input);
+              cin >> input;
           }
           if (input == "n") {
                again = false;

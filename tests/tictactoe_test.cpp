@@ -32,3 +32,26 @@ TEST_CASE("FirstSpot finds the lowest spot") {
     vector<char> board = {'0', 'X', 'O', '3', '4', '5', '6', '7', '8', '9'};
     REQUIRE(FirstSpot(board) == 3);
 }
+TEST_CASE("Trap goes off properly in trap mode only") {
+    REQUIRE(isTrapHit(5,5,1) == true);
+    REQUIRE(isTrapHit(4,5,1)== false);
+    REQUIRE(isTrapHit(4,5,2) == false);
+}
+TEST_CASE("Draw works in both trap & no trap modes") {
+    REQUIRE(isDraw(8,1) == true);
+    REQUIRE(isDraw(7,1) == false);
+    REQUIRE(isDraw(9,2) == true);
+    REQUIRE(isDraw(8,2) == false);
+}
+TEST_CASE("Max cells is properly per game mode") {
+    REQUIRE(MaxCells(1)==8);
+    REQUIRE(MaxCells(2)==9);
+}
+TEST_CASE("Randomtrap returns a spot on the board") {
+    srand(1);
+    for (int i=1; i<10; i++) {
+        int cell = RandomTrap();
+        REQUIRE(cell >= 1);
+        REQUIRE(cell <= 9);
+    }
+}
